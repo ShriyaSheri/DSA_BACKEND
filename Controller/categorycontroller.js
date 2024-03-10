@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import categorymodel from "../models/categorymodel.js";
-
+import questionsmodel from "../models/questionsmodel.js";
 const isValidID = _id => (mongoose.Types.ObjectId.isValid(_id));
 
 const isValidCategory = (category) =>
@@ -62,7 +62,7 @@ export const updatecategory=async(req,res)=>{
         const {id}=req.params;
         if(isValidID(id)){
             const updatecategory=await categorymodel.findByIdAndUpdate(id,update,{new:true,runValidators: true})
-            res.status(201).json(update)
+            res.status(201).json(updatecategory)
         }
         
     }
@@ -70,3 +70,21 @@ export const updatecategory=async(req,res)=>{
         res.status(500).json(err)
     }
 }
+
+
+export const DeleteCategory = async (req, res, next) => {
+    const { id } = req.params;
+    try {
+        const category = await categorymodel.findOne({ _id: id });
+        if (!category) {
+            res.status(400).json('Category doesnoot exist')
+        }
+        const idsArray = category.questions;
+        await questionsmodel.deleteMany({ _id: { $in: idsArray } });
+        await category.deleteOne()
+        res.status(200).json({ message: "Successfully Category deleted" })
+    } catch (error) {
+        res.status(500).json(error)
+    }
+}
+

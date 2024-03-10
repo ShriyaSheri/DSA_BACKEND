@@ -12,7 +12,7 @@ const questionSchema = new mongoose.Schema({
         default:'TBD'
     },
     question_solution:{
-        type:String,
+        type:String
     },
     question_link:{
         type:[String],
@@ -22,18 +22,17 @@ const questionSchema = new mongoose.Schema({
     question_status:{
         type:String,
         enum:['Done','Revisit','Pending'],
-        default:"Done"
+        default:"Pending"
     },
 
     question_notes :{
-        type:String,
+        type:String
     },
 
     bookmark:{
         type:Boolean,
         default:false
     }
-
 
 },{timestamps:true})
 

@@ -4,7 +4,8 @@ import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import categoryroutes from "./Routes/categoryroutes.js"
-
+import questionsroutes from "./Routes/questionsroutes.js"
+import dataroutes from "./Routes/dataroutes.js"
 dotenv.config();
 
 
@@ -22,6 +23,8 @@ const app=express()
 app.use(bodyParser.json())
 
 app.use('/category',categoryroutes)
+app.use('/questions',questionsroutes)
+app.use('/data',dataroutes)
 
 const PORT=process.env.PORT
 app.listen(PORT,()=>{
