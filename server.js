@@ -8,7 +8,7 @@ import questionsroutes from "./Routes/questionsroutes.js"
 import dataroutes from "./Routes/dataroutes.js"
 dotenv.config();
 
-
+import cors from 'cors'
 
 
 mongoose.connect(process.env.MONGOURL)
@@ -20,6 +20,7 @@ mongoose.connect(process.env.MONGOURL)
 })
 
 const app=express()
+app.use(cors());
 app.use(bodyParser.json())
 
 app.use('/category',categoryroutes)
